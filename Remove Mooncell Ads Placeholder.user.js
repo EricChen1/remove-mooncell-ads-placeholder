@@ -2,7 +2,7 @@
 // @name         Remove Mooncell Ads Placeholder
 // @name:zh-CN   移除 Mooncell 的广告占位符
 // @namespace    https://github.com/EricChen1/remove-mooncell-ads
-// @version      0.1
+// @version      0.2
 // @description  Remove the entire ad area when using an ad blocker
 // @description:zh-CN 使用广告拦截器时，移除（没清理干净的）整块广告区域
 // @author       Eric Chen
@@ -12,10 +12,14 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
-    let adom=[document.querySelector("#mw-content-text > div.mw-parser-output > div.mp-container-left > div.mp-bbbanner.nomobile"),document.querySelector("#mw-content-text > div.mw-parser-output > div:nth-child(1)"),document.querySelector("#mw-content-text > div.mw-parser-output > div.nomobile")];
-    switch(document.location.href){
+    let adom = [document.querySelector("#mw-content-text > div.mw-parser-output > div.mp-container-left > div.mp-bbbanner.nomobile"), document.querySelector("#mw-content-text > div.mw-parser-output > div:nth-child(1)"), document.querySelector("#mw-content-text > div.mw-parser-output > div.nomobile"), document.querySelector("#mw-content-text > div.mw-parser-output > div:nth-child(4)")];
+    if (document.location.href.includes('%E6%A8%A1%E6%8B%9F%E5%99%A8')) {
+        adom[3].remove();
+        //底部的占位符暂时没法找到怎么去除
+    }
+    switch (document.location.href) {
         case 'https://fgo.wiki/w/%E9%A6%96%E9%A1%B5':
             adom[0].remove();
             break;
@@ -28,7 +32,7 @@
             adom[2].remove();
             break;
         default:
-            console.log('该 Mooncell 页面可能没有广告占位');
+            console.log('该 Mooncell 页面不为首页、任一图鉴页面或其他特殊页面');
             break;
     }
 })();
